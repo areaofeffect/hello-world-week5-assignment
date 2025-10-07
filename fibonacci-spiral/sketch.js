@@ -6,7 +6,7 @@
 let count = 800;
 let scaleFactor = 10;
 let offset = 0.0;
-let phi = (1 + sqrt(5)) / 2.0;  // golden ratio ≈ 1.618033989
+let phi;  // golden ratio ≈ 1.618033989, calculated in setup()
 // (2 - phi) * 2 * PI is golden angle = c. 2.39996323 radians, or c. 137.5 degrees
 let inc;
 let theta = 0;
@@ -23,6 +23,9 @@ let palette = [
 
 function setup() {
   createCanvas(600, 600);
+
+  // Calculate the golden ratio
+  phi = (1 + sqrt(5)) / 2.0;  // ≈ 1.618033989
 
   // Calculate the golden angle increment
   inc = (2 - phi) * TWO_PI + offset;
