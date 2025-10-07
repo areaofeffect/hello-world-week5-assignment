@@ -57,15 +57,16 @@ function drawMultipleCircles(x, y, diameter, circleColor, number) {
   // Calculate angle between each circle
   let angle = TWO_PI / number;
 
+  // Create fill and stroke colors with different alpha values
+  // Fill color with semi-transparency (125 alpha out of 255)
+  let fillColor = color(circleColor[0], circleColor[1], circleColor[2], 125);
+  // Outline color with full opacity (255 alpha)
+  let strokeColor = color(circleColor[0], circleColor[1], circleColor[2], 255);
+
   for (let i = 0; i < number; i++) {
     // Use sin and cos to position circles in a circle
     let newX = sin(angle * i) * diameter / 4 + x;
     let newY = cos(angle * i) * diameter / 4 + y;
-
-    // Fill color with semi-transparency (125 alpha)
-    let fillColor = color(circleColor[0], circleColor[1], circleColor[2], 125);
-    // Outline color with full opacity (255 alpha)
-    let strokeColor = color(circleColor[0], circleColor[1], circleColor[2], 255);
 
     drawCircle(newX, newY, diameter / 2, fillColor, strokeColor);
   }
