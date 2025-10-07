@@ -42,10 +42,12 @@ For students who want to work locally and get comfortable with a full developmen
    - Select one of the step folders (e.g., `step1/`)
 
 5. **Run the sketch:**
-   - Press `Cmd+Shift+P` (Mac) or `Ctrl+Shift+P` (Windows) to open the Command Palette
-   - Type "p5" and select "p5: Create Server"
-   - Your browser will open with your sketch running
-   - The sketch will auto-reload when you save changes
+   - Simply open the `index.html` file in your web browser, OR
+   - Use the Live Server extension in VS Code:
+     - Install "Live Server" extension by Ritwick Dey
+     - Right-click on `index.html` and select "Open with Live Server"
+   - Your sketch will display in the browser
+   - Changes will auto-reload when you save (if using Live Server)
 
 ## Learning Path
 
