@@ -94,6 +94,18 @@ The files are numbered to guide you through increasingly complex patterns:
 - Positioned using polar coordinates and the golden angle (≈ 137.5°)
 - Demonstrates advanced mathematical patterns in generative art
 
+### **step6-animated** - Animation Showcase (Bonus!)
+- Interactive animations with dropdown selector
+- Four animation modes:
+  - **Rotating**: Circles spin around their centers
+  - **Pulsing**: Patterns breathe and grow/shrink rhythmically
+  - **Color Shifting**: Colors cycle through the palette
+  - **Particles Appearing**: Circles appear progressively
+- Demonstrates the p5.js `draw()` loop for continuous animation
+- Shows DOM element interaction (dropdown menu)
+- Uses `sin()` and `frameCount` for smooth motion
+- Press 's' to save a frame
+
 ## Creating Your Own Patterns
 
 ### Using Different Shapes
