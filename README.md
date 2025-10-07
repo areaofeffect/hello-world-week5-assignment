@@ -238,6 +238,26 @@ let between = lerpColor(from, to, 0.5);  // Purple
 
 ## Understanding Key Techniques
 
+### Alpha Blending: p5.js vs Python/Pillow
+
+**Important Note:** You may notice that the p5.js examples look different from Python versions when using transparency (alpha channel). This is because **p5.js and Python/Pillow handle alpha blending differently**.
+
+**In Python/Pillow (PIL):**
+- Semi-transparent shapes can use higher alpha values (like 125 out of 255)
+- Overlapping areas accumulate gradually, creating subtle layering effects
+- The compositing algorithm preserves more translucency
+
+**In p5.js:**
+- You need to use much lower alpha values (like 15-30) to achieve similar translucency
+- Alpha accumulates faster, making overlapping areas opaque more quickly
+- The rendering creates a different aesthetic - often more glowy/ethereal
+
+**Example from step5:**
+- Python uses: `alpha = 125` for semi-transparent fills
+- p5.js uses: `alpha = 15` to achieve a similar translucent effect
+
+**Tip for students:** Experiment with different alpha values to find what looks best! There's no single "correct" value - it depends on the effect you want to create.
+
 ### Anti-Aliasing in p5.js
 
 p5.js automatically applies anti-aliasing to make smooth edges. You can control this:
