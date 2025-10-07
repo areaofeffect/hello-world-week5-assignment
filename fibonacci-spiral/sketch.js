@@ -51,8 +51,8 @@ function draw() {
 
     // Fill color with full opacity
     let fillColor = color(circleColor[0], circleColor[1], circleColor[2], 255);
-    // Outline color with no opacity (invisible outline)
-    let strokeColor = color(circleColor[0], circleColor[1], circleColor[2], 0);
+    // Outline color with visible stroke
+    let strokeColor = color(circleColor[0], circleColor[1], circleColor[2], 255);
 
     drawCircle(x, y, 10, fillColor, strokeColor);
   }
@@ -61,8 +61,7 @@ function draw() {
 // Helper function to draw circles
 function drawCircle(x, y, diameter, fillColor, strokeColor) {
   fill(fillColor);
-  stroke(strokeColor);
-  strokeWeight(1);
+  noStroke();  // No outline for cleaner spiral
   ellipse(x, y, diameter, diameter);
 }
 
