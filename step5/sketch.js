@@ -22,7 +22,7 @@ function setup() {
 }
 
 function draw() {
-  background(255);
+  background(0);  // Black background
 
   // Create a 4x4 grid, drawing multiple circles in each cell
   for (let i = 0; i < 4; i++) {
@@ -34,8 +34,8 @@ function draw() {
       let circleColor = palette[colorIndex];
 
       drawMultipleCircles(
-        i * cellWidth,
-        j * cellHeight,
+        i * cellWidth + cellWidth / 2,  // Center of cell
+        j * cellHeight + cellHeight / 2,  // Center of cell
         cellWidth,
         circleColor,
         16  // number of circles to draw
@@ -49,11 +49,11 @@ function drawCircle(x, y, diameter, fillColor, strokeColor) {
   fill(fillColor);
   stroke(strokeColor);
   strokeWeight(5);
-  ellipse(x + diameter / 2, y + diameter / 2, diameter, diameter);
+  ellipse(x, y, diameter, diameter);  // x,y is already the center
 }
 
 // Helper function to draw multiple circles in a circular pattern
-function drawMultipleCircles(x, y, diameter, circleColor, number) {
+function drawMultipleCircles(centerX, centerY, diameter, circleColor, number) {
   // Calculate angle between each circle
   let angle = TWO_PI / number;
 
@@ -64,9 +64,10 @@ function drawMultipleCircles(x, y, diameter, circleColor, number) {
   let strokeColor = color(circleColor[0], circleColor[1], circleColor[2], 255);
 
   for (let i = 0; i < number; i++) {
-    // Use sin and cos to position circles in a circle
-    let newX = sin(angle * i) * diameter / 4 + x;
-    let newY = cos(angle * i) * diameter / 4 + y;
+    // Use sin and cos to position circles in a circular pattern
+    // radius/4 places the circles at a distance from the center
+    let newX = sin(angle * i) * diameter / 4 + centerX;
+    let newY = cos(angle * i) * diameter / 4 + centerY;
 
     drawCircle(newX, newY, diameter / 2, fillColor, strokeColor);
   }
