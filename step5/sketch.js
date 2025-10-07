@@ -24,6 +24,10 @@ function setup() {
 function draw() {
   background(0);  // Black background
 
+  // Use ADD blend mode to accumulate colors where circles overlap
+  // This mimics how Pillow/PIL handles alpha blending
+  blendMode(ADD);
+
   // Create a 4x4 grid, drawing multiple circles in each cell
   for (let i = 0; i < 4; i++) {
     for (let j = 0; j < 4; j++) {
@@ -42,6 +46,9 @@ function draw() {
       );
     }
   }
+
+  // Reset blend mode
+  blendMode(BLEND);
 }
 
 // Helper function to draw a single circle with fill and outline
