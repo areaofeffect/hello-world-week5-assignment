@@ -3,9 +3,8 @@
 // Enables image saving
 // This is the p5.js equivalent of looping-pattern-step5.py
 
-// COMPARISON MODE: Canvas is 2x2 (800x800) to test 4 different blend approaches
-let canvasWidth = 800;
-let canvasHeight = 800;
+let canvasWidth = 400;
+let canvasHeight = 400;
 let cellWidth = 100;
 let cellHeight = 100;
 
@@ -19,69 +18,32 @@ let palette = [
 
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
+
+  // Draw black background ONCE in setup, not in draw
+  background(0);
+
+  // Don't use noLoop - we'll draw once but let it accumulate
   noLoop();
 }
 
 function draw() {
-  background(0);  // Black background
+  // DON'T call background() here - let shapes accumulate with alpha blending
 
-  // Draw labels for each quadrant
-  fill(255);
-  noStroke();
-  textSize(12);
-  textAlign(CENTER, TOP);
-  text("MULTIPLY", 100, 5);
-  text("BLEND (default)", 500, 5);
-  text("ADD", 100, 405);
-  text("BLEND (low alpha)", 500, 405);
-
-  // Top-left quadrant: MULTIPLY blend mode
-  push();
-  translate(0, 20);
-  blendMode(MULTIPLY);
-  drawGrid(0, 0, 125); // alpha = 125
-  pop();
-
-  // Top-right quadrant: Default BLEND mode (alpha 125)
-  push();
-  translate(400, 20);
-  blendMode(BLEND);
-  drawGrid(0, 0, 125); // alpha = 125
-  pop();
-
-  // Bottom-left quadrant: ADD blend mode
-  push();
-  translate(0, 420);
-  blendMode(ADD);
-  drawGrid(0, 0, 125); // alpha = 125
-  pop();
-
-  // Bottom-right quadrant: BLEND mode with low alpha
-  push();
-  translate(400, 420);
-  blendMode(BLEND);
-  drawGrid(0, 0, 40); // alpha = 40 (much lower)
-  pop();
-
-  // Reset blend mode
-  blendMode(BLEND);
-}
-
-// Helper function to draw the 4x4 grid with specified blend mode and alpha
-function drawGrid(offsetX, offsetY, alphaValue) {
+  // Create a 4x4 grid, drawing multiple circles in each cell
   for (let i = 0; i < 4; i++) {
     for (let j = 0; j < 4; j++) {
+      console.log("row:", i, "col:", j);
+
       // Select color from palette based on position
       let colorIndex = 4 * i + j;
       let circleColor = palette[colorIndex];
 
       drawMultipleCircles(
-        offsetX + i * cellWidth + cellWidth / 2,  // Center of cell
-        offsetY + j * cellHeight + cellHeight / 2,  // Center of cell
+        i * cellWidth + cellWidth / 2,  // Center of cell
+        j * cellHeight + cellHeight / 2,  // Center of cell
         cellWidth,
         circleColor,
-        16,  // number of circles to draw
-        alphaValue
+        16  // number of circles to draw
       );
     }
   }
@@ -96,15 +58,16 @@ function drawCircle(x, y, diameter, fillColor, strokeColor) {
 }
 
 // Helper function to draw multiple circles in a circular pattern
-function drawMultipleCircles(centerX, centerY, diameter, circleColor, number, alphaValue) {
+function drawMultipleCircles(centerX, centerY, diameter, circleColor, number) {
   // Calculate angle between each circle
   let angle = TWO_PI / number;
 
   // Create fill and stroke colors with different alpha values
-  // Fill color with specified alpha transparency
-  let fillColor = color(circleColor[0], circleColor[1], circleColor[2], alphaValue);
-  // Outline color with full opacity (255 alpha)
-  let strokeColor = color(circleColor[0], circleColor[1], circleColor[2], 255);
+  // NOTE: Using much lower alpha (15) because p5.js accumulates differently than Pillow
+  // Pillow uses 125 alpha, but p5.js makes things opaque faster
+  let fillColor = color(circleColor[0], circleColor[1], circleColor[2], 15);
+  // Outline color with low alpha too for better blending
+  let strokeColor = color(circleColor[0], circleColor[1], circleColor[2], 30);
 
   for (let i = 0; i < number; i++) {
     // Use sin and cos to position circles in a circular pattern
