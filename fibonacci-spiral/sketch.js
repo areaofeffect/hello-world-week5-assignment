@@ -9,9 +9,13 @@ let offset = 0.0;
 let phi;  // golden ratio ≈ 1.618033989, calculated in setup()
 // (2 - phi) * 2 * PI is golden angle = c. 2.39996323 radians, or c. 137.5 degrees
 let inc;
-let theta = 0;
 let originX = 300;
 let originY = 300;  // center of the canvas
+
+// Animation variables
+let currentCircle = 0;  // Which circle we're currently drawing/erasing
+let isDrawing = true;   // true = drawing from center, false = erasing from outside
+let animationSpeed = 3; // How many circles to draw/erase per frame
 
 // Color palette - "Purples_r" (reversed) inspired palette (16 colors)
 let palette = [
@@ -30,14 +34,33 @@ function setup() {
   // Calculate the golden angle increment
   inc = (2 - phi) * TWO_PI + offset;
 
-  noLoop();
+  // Enable animation loop
+  frameRate(30);
 }
 
 function draw() {
   background(255);
 
-  // Draw 800 circles in a golden spiral pattern
-  for (let j = 1; j <= count; j++) {
+  // Update animation state
+  if (isDrawing) {
+    // Drawing phase: grow from center
+    currentCircle += animationSpeed;
+    if (currentCircle >= count) {
+      currentCircle = count;
+      isDrawing = false;  // Switch to erasing
+    }
+  } else {
+    // Erasing phase: shrink from outside
+    currentCircle -= animationSpeed;
+    if (currentCircle <= 0) {
+      currentCircle = 0;
+      isDrawing = true;  // Switch back to drawing
+    }
+  }
+
+  // Draw circles from 1 to currentCircle
+  let theta = 0;
+  for (let j = 1; j <= currentCircle; j++) {
     // Calculate radius based on square root for spiral growth
     let r = scaleFactor * sqrt(j);
 
@@ -54,15 +77,13 @@ function draw() {
 
     // Fill color with full opacity
     let fillColor = color(circleColor[0], circleColor[1], circleColor[2], 255);
-    // Outline color with visible stroke
-    let strokeColor = color(circleColor[0], circleColor[1], circleColor[2], 255);
 
-    drawCircle(x, y, 10, fillColor, strokeColor);
+    drawCircle(x, y, 10, fillColor);
   }
 }
 
 // Helper function to draw circles
-function drawCircle(x, y, diameter, fillColor, strokeColor) {
+function drawCircle(x, y, diameter, fillColor) {
   fill(fillColor);
   noStroke();  // No outline for cleaner spiral
   ellipse(x, y, diameter, diameter);
