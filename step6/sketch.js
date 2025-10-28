@@ -49,6 +49,7 @@ function drawCircle(x, y, diameter, fillColor, strokeColor) {
 // Helper function to draw multiple circles in a circular pattern
 function drawMultipleCircles(x, y, diameter, number) {
   // Calculate angle between each circle
+
   let angle = TWO_PI / number;
 
   for (let i = 0; i < number; i++) {

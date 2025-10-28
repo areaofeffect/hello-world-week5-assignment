@@ -27,7 +27,7 @@ function draw() {
       drawCircle(
         i * cellWidth,
         j * cellHeight,
-        cellWidth,
+        cellWidth - 5, // Slightly smaller to fit in cell
         color(r, g, b)
       );
     }
